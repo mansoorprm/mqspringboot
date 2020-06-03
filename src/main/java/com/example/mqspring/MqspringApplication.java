@@ -33,6 +33,20 @@ public class MqspringApplication {
 	    }
 	}
 	
+	@GetMapping("publish/{msg}")
+	String publish(@PathVariable String msg){
+	    try{
+	    //    jmsTemplate.convertAndSend("DEV.TEST.TOPIC",msg);
+	    	jmsTemplate.setPubSubDomain(true);
+	        jmsTemplate.convertAndSend("/dev/JavaTopic", "asfd");
+	        
+	        return "OK";
+	    }catch(JmsException ex){
+	        ex.printStackTrace();
+	        return "FAIL";
+	    }
+	}
+	
 	@GetMapping("recv")
 	String recv(){
 	    try{
