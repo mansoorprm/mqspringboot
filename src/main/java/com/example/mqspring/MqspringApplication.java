@@ -38,7 +38,7 @@ public class MqspringApplication {
 	    try{
 	    //    jmsTemplate.convertAndSend("DEV.TEST.TOPIC",msg);
 	    	jmsTemplate.setPubSubDomain(true);
-	        jmsTemplate.convertAndSend("/dev/JavaTopic", "asfd");
+	        jmsTemplate.convertAndSend("/dev/JavaTopic", msg);
 	        
 	        return "OK";
 	    }catch(JmsException ex){
