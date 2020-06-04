@@ -33,6 +33,18 @@ public class MqspringApplication {
 	    }
 	}
 	
+
+	
+	@GetMapping("recv")
+	String recv(){
+	    try{
+	        return jmsTemplate.receiveAndConvert("TEST.QUEUE.1").toString();
+	    }catch(JmsException ex){
+	        ex.printStackTrace();
+	        return "FAIL";
+	    }
+	}
+	
 	@GetMapping("publish/{msg}")
 	String publish(@PathVariable String msg){
 	    try{
@@ -47,10 +59,11 @@ public class MqspringApplication {
 	    }
 	}
 	
-	@GetMapping("recv")
-	String recv(){
+	@GetMapping("subscribe")
+	String subscribe(){
 	    try{
-	        return jmsTemplate.receiveAndConvert("TEST.QUEUE.1").toString();
+	    	jmsTemplate.setPubSubDomain(true);
+	        return jmsTemplate.receiveAndConvert("/dev/JavaTopic").toString();
 	    }catch(JmsException ex){
 	        ex.printStackTrace();
 	        return "FAIL";
